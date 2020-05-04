@@ -26,19 +26,19 @@ package aux_package is
 			cout: OUT STD_LOGIC);
 	END component;
 -----------------------------------------------------------------
-	component detector IS
-		GENERIC(k : positive := 3;
-				m : positive := 7);
-		PORT (count : IN std_logic_vector(k downto 0);
-			  detector : OUT std_logic);
-	END component;
+--	component detector IS
+--		GENERIC(k : positive := 3;
+--				m : positive := 7);
+--		PORT (count : IN std_logic_vector(k downto 0);
+--			  detector : OUT std_logic);
+--	END component;
 -----------------------------------------------------------------
-	component counter IS
-		GENERIC(k : positive := 3;
-				m : positive := 7);
-		PORT (rst, ena, clk, rise : IN STD_LOGIC;
-				count : OUT std_logic_vector(k downto 0));
-	END component;
+--	component counter IS
+--		GENERIC(k : positive := 3;
+--				m : positive := 7);
+--		PORT (rst, ena, clk, rise : IN STD_LOGIC;
+--				count : OUT std_logic_vector(k downto 0));
+--s	END component;
 
 
 

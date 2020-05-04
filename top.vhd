@@ -19,15 +19,17 @@ entity top is
 end top;
 ------------- complete the top Architecture code --------------
 architecture arc_sys of top is
-signal ding_new: STD_LOGIC_VECTOR (n-1 DOWNTO 0);
-signal din_old: STD_LOGIC_VECTOR (n-1 DOWNTO 0);
-SIGNAL din_old_xor : std_logic_vector(n-1 DOWNTO 0);
-signal sub : std_logic_vector(n DOWNTO 0);
-signal subInt : integer;
-signal rise: STD_LOGIC;
+signal din_new : STD_LOGIC_VECTOR (n-1 DOWNTO 0);
+signal din_old : STD_LOGIC_VECTOR (n-1 DOWNTO 0);	 
+SIGNAL din_old_xor : std_logic_vector(n-1 DOWNTO 0); -- For the condition check (subtractor)
+signal sub : std_logic_vector(n DOWNTO 0);			 -- The subtractor result
+signal subInt : integer; 							 -- The subtractor result in integer
+signal rise : STD_LOGIC;
+signal count : std_logic_vector(k downto 0);
 
 begin
-	process(rst,clk,ena)
+	-- Synchronous delay
+	process(rst,clk)
 	begin
 	   if(rst='1') then
 		    din_new<= (others=>'0');
@@ -35,16 +37,16 @@ begin
 	   elsif (clk'EVENT AND clk='1') then
 	      if(ena='1') then
      			  din_new<=din;
-     			  din_old<=dnew;
+     			  din_old<=din_new;
 		    end if;
 	   end if;
 	end process;	
 	
-		   
+	
+	-- Condition check (Subtractor)	
 	temp : for i in 0 to n-1 generate
 			din_old_xor(i) <= (not(din_old(i)));
 	end generate;
-
 
 	L0 : Adder generic map(n) port map(
 		a=>din_new,
@@ -62,11 +64,33 @@ begin
 		'0';
 	
 	
+	-- Counter
+	PROCESS (clk, rst)
+		VARIABLE temp : STD_LOGIC_VECTOR (k downto 0);
+	BEGIN
+		IF(rst='1') THEN
+			temp := (others => '0');
+		ELSIF rising_edge(clk) THEN
+			IF(ena='1') THEN
+				IF(rise='1' AND temp<m+1) THEN
+					temp := temp + 1;
+				ELSIF(rise='0') THEN
+					temp := (others => '0');
+				END IF;
+			END IF;
+		END IF;
+		count <= temp;
+	END PROCESS;
+  
+  
+  -- Detector
+	PROCESS (count)
+	BEGIN
+		IF(count>=m+1) THEN
+			detector <= '1';
+		ELSE
+			detector <= '0';
+		END IF;
+	END PROCESS;
+	
 end arc_sys;
-
-
-
-
-
-
-

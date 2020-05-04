@@ -12,7 +12,6 @@ END counter;
 
 ------------------------------------------------
 ARCHITECTURE rtl OF counter IS
-	--signal temp : std_logic_vector (k downto 0);
 BEGIN
   PROCESS (clk, rst)
     VARIABLE temp : STD_LOGIC_VECTOR (k downto 0);
@@ -30,5 +29,4 @@ BEGIN
 	END IF;
 	count <= temp;
   END PROCESS;
-  --count <= temp;
 END rtl;
