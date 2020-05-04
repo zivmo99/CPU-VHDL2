@@ -81,16 +81,9 @@ begin
 		END IF;
 		count <= temp;
 	END PROCESS;
-  
-  
-  -- Detector
-	PROCESS (count)
-	BEGIN
-		IF(count>=m+1) THEN
-			detector <= '1';
-		ELSE
-			detector <= '0';
-		END IF;
-	END PROCESS;
+
+		
+	-- Detector	
+	detector <= '1' when count>=m else '0';
 	
 end arc_sys;

@@ -14,12 +14,6 @@ END detector;
 ------------------------------------------------
 ARCHITECTURE rtl OF detector IS
 BEGIN
-  PROCESS (count)
   BEGIN
-    IF(count>=m+1) THEN
-		detector <= '1';
-	ELSE
-		detector <= '0';
-	END IF;
-  END PROCESS;
+  detector <= '1' when count>=m else '0';
 END rtl;
