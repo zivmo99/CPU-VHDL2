@@ -1,20 +1,34 @@
-compile order:
+Compile order:
 
-0 - aux_package.vhd	
-//The packge of this project
+0 - tb_CC.vhd	
+// Test bench for the condition check. Input ports: din[i] - vector length 8 - new value, din[i-1] - vector length 8 - old value.
+// Output port - rise, 1 bit.
 
-1 - top.vhd		
-//Basic full adder of 1 bit - 3 inputs of 1 bit: x,y,cin , 2 outputs of 1 bit :s,cout. do: x+y+cin = cout & s
+1 - tb_counter.vhd		
+// Test bench for the counter
 
-2 - counter.vhd		
-//
-2 - detector.vhd		
-//
-2 - tb_counter.vhd		
-//
 2 - tb_detector.vhd		
-//
-2 - tb_top.vhd		
-//
-2 - counter.vhd		
-//
+// Test bench for the detector
+
+3 - tb_SD.vhd
+// Test bench for the synchronous delay. in ports: din - vector of length 8, clk, rst, ena: ports of 1 bit length.
+// Output ports: din[i] - vector length 8 - new value, din[i-1] - vector length 8 - old value.
+
+4 - tb_top.vhd		
+// Test bench for top
+
+5 - Adder.vhd		
+// Adder sub module. 2 in vectors of length 8. 1 in bit cin. s- output vector length 8, cout - 1 bit carry.
+
+6 - aux_package.vhd		
+// The packge of this project
+
+7 - counter.vhd		
+// Counts the number of rise signal. in port 1 bit - rise. output 4 bit count vector.
+
+8 - detector.vhd		
+// Detects if the counter>=8. 4 bit vector in port: counter. 1 bit output port detect.
+
+9 - top.vhd		
+// The primary module of the project. 3 in bit ports: rst,ena,clk. din in vector port length 8.
+// cond - in port in length 4. detector - output bit port.
